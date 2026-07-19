@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='2.0.0' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='3.0.0' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
   <meta content='width=device-width, initial-scale=1, viewport-fit=cover' name='viewport'/>
   <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
   <meta content='max-image-preview:large' name='robots'/>
-  <meta content='index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large' name='googlebot'/>
+  <meta content='index, follow, max-snippet:-1, max-image-preview:large' name='googlebot'/>
   <b:include data='blog' name='all-head-content'/>
-  <b:if cond='data:view.isSingleItem'>
-    <title><data:blog.pageName/> | <data:blog.title/></title>
-  <b:elseif cond='data:view.isHomepage'/>
+  <b:if cond='data:view.isHomepage'>
     <title><data:blog.title/></title>
+  <b:elseif cond='data:view.isSingleItem'/>
+    <title><data:blog.pageName/> - <data:blog.title/></title>
   <b:elseif cond='data:view.search.query'/>
-    <title><data:view.search.query/> 검색 결과 | <data:blog.title/></title>
+    <title><data:view.search.query/> 검색 결과 - <data:blog.title/></title>
   <b:else/>
     <title><data:blog.pageTitle/></title>
   </b:if>
   <b:if cond='data:blog.metaDescription'>
     <meta expr:content='data:blog.metaDescription' name='description'/>
   <b:elseif cond='data:view.isSingleItem'/>
-    <meta expr:content='data:blog.pageName + &quot; - &quot; + data:blog.title' name='description'/>
+    <meta expr:content='data:blog.pageName + &quot;에 대한 실제 선택 기준과 확인할 점을 정리했습니다.&quot;' name='description'/>
   <b:else/>
-    <meta expr:content='data:blog.title + &quot;의 최신 글과 비교 정보&quot;' name='description'/>
+    <meta expr:content='data:blog.title + &quot;의 비교, 구매 전 체크리스트, 생활형 정보&quot;' name='description'/>
   </b:if>
   <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
   <meta expr:content='data:blog.title' property='og:site_name'/>
@@ -37,556 +37,317 @@
     <meta expr:content='data:blog.postImageUrl' name='twitter:image'/>
   </b:if>
   <meta content='summary_large_image' name='twitter:card'/>
-  <meta content='#fffdf8' name='theme-color'/>
+  <meta content='#fbfaf6' name='theme-color'/>
   <b:skin><![CDATA[
 /*
-  Revenue Clarity Pro for Blogger
-  - Affiliate and AdSense ready
-  - SEO-focused content surfaces
-  - No dark mode, no reading progress, no reading-time widget
-  - Warm professional editorial design, not news-like and not AI-like
-  - Works with standard Blogger layout widgets
+  Theme name: Hearth Review
+  Direction: a calm Korean affiliate and AdSense blog theme.
+  The design intentionally avoids: dark UI, news portal layout, progress bars, reading-time badges,
+  noisy gradients, generic AI landing-page sections, and platform-specific share button clutter.
 */
 
-/* ==========================================================================
-   01. Design tokens
-   ========================================================================== */
+/* 01. Foundation --------------------------------------------------------- */
 :root {
-  --bg: #f7f4ee;
-  --bg-soft: #fbf8f1;
-  --surface: #fffdf8;
-  --surface-2: #fff8ed;
-  --surface-3: #fff4e4;
-  --text: #24211d;
-  --text-soft: #3a342e;
-  --muted: #6e675f;
-  --muted-2: #8d8174;
+  --page: #fbfaf6;
+  --paper: #fffefb;
+  --paper-warm: #fff8ed;
+  --paper-green: #f3faf6;
+  --ink: #27231f;
+  --ink-2: #4a423a;
+  --muted: #756c62;
+  --faint: #9a9085;
   --line: #e8dfd2;
-  --line-strong: #d8c8b2;
-  --brand: #9b5c22;
-  --brand-2: #c77a2d;
-  --brand-3: #7a4316;
-  --accent: #236b5e;
-  --accent-2: #eff8f5;
-  --accent-3: #dceee9;
-  --warning: #fff0c7;
-  --success: #edf7e9;
-  --danger: #fff1ef;
-  --shadow: 0 18px 50px rgba(67, 45, 22, .10);
-  --shadow-sm: 0 8px 22px rgba(67, 45, 22, .08);
-  --radius-xl: 28px;
-  --radius: 18px;
-  --radius-sm: 12px;
-  --radius-pill: 999px;
-  --max: 1180px;
-  --content: 760px;
-  --sidebar: 330px;
-  --gap: 34px;
+  --line-2: #d8c8b2;
+  --brand: #8a4f20;
+  --brand-2: #b66d2d;
+  --green: #276457;
+  --green-soft: #eaf5f1;
+  --yellow: #fff0c6;
+  --red-soft: #fff2ef;
+  --shadow: 0 18px 46px rgba(64, 45, 26, .10);
+  --shadow-soft: 0 8px 22px rgba(64, 45, 26, .07);
+  --radius-xl: 30px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --container: 1160px;
+  --article: 760px;
+  --sidebar: 320px;
+  --gap: 32px;
   --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
   --serif: Georgia, "Noto Serif KR", serif;
 }
-
-/* ==========================================================================
-   02. Reset and base
-   ========================================================================== */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: linear-gradient(180deg, var(--bg-soft) 0, var(--bg) 380px);
-  color: var(--text);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255, 240, 198, .48), transparent 34rem),
+    linear-gradient(180deg, #fffdf8 0, var(--page) 420px, var(--page) 100%);
+  color: var(--ink);
   font-family: var(--font);
   font-size: 17px;
-  line-height: 1.75;
+  line-height: 1.76;
+  letter-spacing: -.01em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-a {
-  color: var(--brand);
-  text-decoration-thickness: .09em;
-  text-underline-offset: .16em;
-}
-a:hover { color: var(--brand-3); }
-img, svg, video, iframe { max-width: 100%; }
-img { height: auto; border-radius: 14px; }
+a { color: var(--brand); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+a:hover { color: #653713; }
+img, iframe, video { max-width: 100%; }
+img { height: auto; border-radius: var(--radius-md); }
 button, input, textarea, select { font: inherit; }
 button { cursor: pointer; }
-::selection { background: var(--warning); color: #21180e; }
+::selection { background: var(--yellow); color: #19130d; }
 .skip-link {
   position: absolute;
-  left: 14px;
-  top: -70px;
-  z-index: 999;
+  top: -72px;
+  left: 16px;
+  z-index: 9999;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
   background: #fff;
   color: #111;
-  padding: 10px 14px;
-  border-radius: 10px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-soft);
 }
-.skip-link:focus { top: 12px; }
-.site-shell {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
+.skip-link:focus { top: 14px; }
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
 
-/* ==========================================================================
-   03. Header, menu and search
-   ========================================================================== */
-.top-note {
-  background: #fff7e8;
+/* 02. Header ------------------------------------------------------------- */
+.notice-bar {
   border-bottom: 1px solid var(--line);
-  color: #5d4b35;
+  background: rgba(255, 248, 237, .88);
+  color: #5f5143;
   font-size: 14px;
 }
-.top-note .site-shell {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
+.notice-bar .wrap { display: flex; justify-content: center; padding-top: 7px; padding-bottom: 7px; }
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 253, 248, .94);
-  backdrop-filter: saturate(160%) blur(14px);
-  border-bottom: 1px solid rgba(232, 223, 210, .9);
+  border-bottom: 1px solid rgba(232, 223, 210, .86);
+  background: rgba(255, 254, 251, .94);
+  backdrop-filter: blur(14px) saturate(150%);
 }
-.header-inner {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  min-height: 74px;
-}
-.brand-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-.brand-mark {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
+.header-grid { display: flex; align-items: center; gap: 18px; min-height: 76px; }
+.brand { display: flex; align-items: center; min-width: 0; gap: 12px; }
+.brand-symbol {
   width: 42px;
   height: 42px;
+  flex: 0 0 auto;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  color: #fff;
+  display: grid;
+  place-items: center;
+  background: #fff4df;
+  color: var(--brand);
+  border: 1px solid #ead5b5;
   font-weight: 900;
-  box-shadow: 0 10px 22px rgba(155, 92, 34, .24);
 }
-.Header h1,
-.Header .title {
-  margin: 0;
-  font-size: 23px;
-  line-height: 1.2;
-  letter-spacing: -.04em;
-}
-.Header h1 a,
-.Header .title a {
-  color: var(--text);
-  text-decoration: none;
-}
-.Header .description {
-  margin: 3px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.35;
-}
-.nav-toggle {
+.Header h1, .Header .title { margin: 0; font-size: 23px; line-height: 1.22; letter-spacing: -.045em; }
+.Header h1 a, .Header .title a { color: var(--ink); text-decoration: none; }
+.Header .description { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+.menu-button {
   display: none;
   margin-left: auto;
   border: 1px solid var(--line);
   background: #fff;
-  border-radius: 12px;
-  padding: 9px 12px;
-  color: var(--text);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 9px 13px;
   font-weight: 800;
 }
-.nav-area {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.LinkList ul,
-.PageList ul {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.LinkList a,
-.PageList a {
+.nav-panel { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.nav-panel .PageList ul, .nav-panel .LinkList ul { list-style: none; display: flex; align-items: center; gap: 3px; margin: 0; padding: 0; }
+.nav-panel .PageList a, .nav-panel .LinkList a {
   display: block;
   padding: 9px 12px;
-  border-radius: var(--radius-pill);
-  color: #3b332b;
+  color: #38312b;
+  border-radius: 999px;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 760;
   font-size: 14px;
 }
-.LinkList a:hover,
-.PageList a:hover {
-  background: #f5ead8;
-  color: var(--brand);
-}
-.search-mini { position: relative; }
-.search-mini input {
+.nav-panel .PageList a:hover, .nav-panel .LinkList a:hover { background: var(--paper-warm); color: var(--brand); }
+.search-form { position: relative; }
+.search-form input {
   width: 190px;
   border: 1px solid var(--line);
   background: #fff;
-  border-radius: var(--radius-pill);
-  padding: 10px 38px 10px 14px;
-  outline: none;
+  border-radius: 999px;
+  padding: 10px 40px 10px 14px;
+  outline: 0;
 }
-.search-mini input:focus {
-  border-color: #d0a873;
-  box-shadow: 0 0 0 4px rgba(199, 122, 45, .12);
-}
-.search-mini button {
+.search-form input:focus { border-color: #c99d65; box-shadow: 0 0 0 4px rgba(182, 109, 45, .12); }
+.search-form button {
   position: absolute;
   right: 4px;
   top: 4px;
-  border: 0;
-  background: var(--brand);
-  color: #fff;
-  border-radius: var(--radius-pill);
   width: 32px;
   height: 32px;
-}
-
-/* ==========================================================================
-   04. Layout and homepage cards
-   ========================================================================== */
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--sidebar);
-  gap: var(--gap);
-  align-items: start;
-  padding-top: 34px;
-  padding-bottom: 48px;
-}
-.main-col { min-width: 0; }
-.sidebar {
-  position: sticky;
-  top: 96px;
-  min-width: 0;
-}
-.hero-card {
-  background: linear-gradient(135deg, #fffdf8, #fff3df);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  padding: 34px;
-  box-shadow: var(--shadow);
-  margin-bottom: 28px;
-}
-.hero-card h2 {
-  margin: 0 0 10px;
-  font-size: clamp(28px, 4vw, 44px);
-  line-height: 1.15;
-  letter-spacing: -.055em;
-}
-.hero-card p {
-  max-width: 760px;
-  margin: 0;
-  color: #65594d;
-}
-.trust-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: -12px 0 26px;
-}
-.trust-item {
-  background: rgba(255,255,255,.72);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 13px 14px;
-  color: #5a4c3f;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-/* ==========================================================================
-   05. Post list
-   ========================================================================== */
-.post-card {
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 22px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  padding: 18px;
-  margin-bottom: 22px;
-  box-shadow: var(--shadow);
-}
-.post-card:hover {
-  border-color: #dec59f;
-  transform: translateY(-1px);
-  transition: transform .18s ease, border-color .18s ease;
-}
-.post-thumb {
-  position: relative;
-  display: block;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border-radius: 18px;
-  background: #f2e2c9;
-}
-.post-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-.fallback-thumb {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 18px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.82), transparent 34%),
-    linear-gradient(135deg, #f9e4bb, #fff8e8 55%, #dceee9);
-  color: #5a3515;
-  text-align: center;
-  font-weight: 900;
-  letter-spacing: -.04em;
-  line-height: 1.25;
-}
-.fallback-thumb span {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.post-card h2 {
-  margin: 0 0 8px;
-  font-size: 24px;
-  line-height: 1.28;
-  letter-spacing: -.04em;
-}
-.post-card h2 a {
-  color: var(--text);
-  text-decoration: none;
-}
-.post-card h2 a:hover { color: var(--brand); }
-.post-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-.post-snippet {
-  color: #554d45;
-  font-size: 15px;
-}
-.label-pill {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid #ead6ba;
-  background: #fff8ed;
-  color: #795020;
-  border-radius: var(--radius-pill);
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-/* ==========================================================================
-   06. Single post typography
-   ========================================================================== */
-.post {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow);
-  padding: clamp(22px, 4vw, 46px);
-}
-.post-header {
-  text-align: left;
-  margin-bottom: 24px;
-}
-.post-title.entry-title {
-  font-size: clamp(31px, 5vw, 52px);
-  line-height: 1.12;
-  letter-spacing: -.06em;
-  margin: 0 0 14px;
-}
-.entry-hero {
-  width: 100%;
-  margin: 0 0 22px;
-  border-radius: 22px;
-  box-shadow: var(--shadow-sm);
-}
-.post-body {
-  font-size: 18px;
-  line-height: 1.86;
-  word-break: keep-all;
-}
-.post-body > :first-child { margin-top: 0; }
-.post-body h2,
-.post-body h3,
-.post-body h4 {
-  scroll-margin-top: 96px;
-  letter-spacing: -.045em;
-  line-height: 1.28;
-  color: #201d19;
-}
-.post-body h2 {
-  margin: 44px 0 16px;
-  padding: 0 0 10px;
-  border-bottom: 3px solid #ead8bd;
-  font-size: 30px;
-}
-.post-body h2:before {
-  content: "";
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 10px;
+  border: 0;
   border-radius: 50%;
   background: var(--brand);
-  vertical-align: middle;
-}
-.post-body h3 {
-  margin: 34px 0 12px;
-  font-size: 24px;
-  padding-left: 14px;
-  border-left: 5px solid var(--accent);
-}
-.post-body h4 {
-  margin: 26px 0 10px;
-  font-size: 20px;
-  color: #473a2f;
-}
-.post-body p { margin: 0 0 18px; }
-.post-body ul,
-.post-body ol {
-  padding-left: 1.35em;
-  margin: 0 0 22px;
-}
-.post-body li { margin: 8px 0; }
-.post-body strong { color: #1f1b17; }
-.post-body mark {
-  background: var(--warning);
-  padding: .1em .25em;
-  border-radius: .35em;
-}
-.post-body blockquote {
-  margin: 28px 0;
-  padding: 20px 22px;
-  border-left: 5px solid var(--brand);
-  background: #fff7e9;
-  border-radius: 0 16px 16px 0;
-  color: #4a4037;
-}
-.post-body pre {
-  overflow: auto;
-  padding: 18px;
-  border-radius: 16px;
-  background: #2b241e;
-  color: #fff6e9;
-  font-size: 14px;
-}
-.post-body code {
-  background: #f6ecdc;
-  border: 1px solid #eadac4;
-  border-radius: 6px;
-  padding: 2px 5px;
-  font-size: .92em;
-}
-.post-body pre code {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  color: inherit;
+  color: #fff;
 }
 
-/* ==========================================================================
-   07. Tables, comparison charts and callouts
-   ========================================================================== */
-.post-body table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  overflow: hidden;
+/* 03. Layout ------------------------------------------------------------- */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) var(--sidebar); gap: var(--gap); align-items: start; padding-top: 34px; padding-bottom: 56px; }
+.content { min-width: 0; }
+.sidebar { min-width: 0; position: sticky; top: 98px; }
+.hero {
+  margin-bottom: 22px;
+  padding: 34px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #fff;
-  margin: 24px 0;
-  font-size: 15px;
+  background: linear-gradient(135deg, #fffefb, #fff5e4);
+  box-shadow: var(--shadow);
 }
-.post-body th {
-  background: #fbedd6;
-  color: #38271a;
-  text-align: left;
-  font-weight: 900;
-}
-.post-body th,
-.post-body td {
-  padding: 13px 14px;
-  border-bottom: 1px solid var(--line);
-  vertical-align: top;
-}
-.post-body tr:last-child td { border-bottom: 0; }
-.post-body tr:nth-child(even) td { background: #fffaf2; }
-.post-body .note-box,
-.post-body .tip-box,
-.post-body .check-box,
-.post-body .caution-box {
-  margin: 24px 0;
-  padding: 18px 20px;
-  border-radius: 18px;
+.hero h2 { margin: 0 0 10px; font-size: clamp(29px, 4vw, 45px); line-height: 1.14; letter-spacing: -.06em; }
+.hero p { max-width: 740px; margin: 0; color: var(--ink-2); }
+.promise-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0 0 26px; }
+.promise { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255,255,255,.74); color: #594d42; font-weight: 800; font-size: 14px; }
+
+/* 04. Widgets ------------------------------------------------------------ */
+.widget {
+  margin: 0 0 20px;
+  padding: 20px;
   border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
 }
-.post-body .note-box { background: var(--surface-2); }
-.post-body .tip-box { background: var(--accent-2); border-color: #cfe7df; }
-.post-body .check-box { background: var(--success); border-color: #d3e9cd; }
-.post-body .caution-box { background: var(--danger); border-color: #f0d4ce; }
-.post-body .pros-cons {
+.widget-title, .sidebar .title, .footer .title { margin: 0 0 13px; font-size: 16px; letter-spacing: -.025em; }
+.PopularPosts ul, .Label ul, .BlogArchive ul, .LinkList ul { list-style: none; margin: 0; padding: 0; }
+.sidebar .PopularPosts li, .sidebar .Label li, .sidebar .BlogArchive li, .sidebar .LinkList li { padding: 10px 0; border-top: 1px solid var(--line); }
+.sidebar .PopularPosts li:first-child, .sidebar .Label li:first-child, .sidebar .BlogArchive li:first-child, .sidebar .LinkList li:first-child { border-top: 0; }
+.Label a, .label-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 5px 4px 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--paper-warm);
+  border: 1px solid #ead6ba;
+  color: #71471d;
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: none;
+}
+.ad-box {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin: 24px 0;
+  place-items: center;
+  min-height: 104px;
+  padding: 16px;
+  border: 1px dashed #d3b58a;
+  border-radius: var(--radius-md);
+  background: repeating-linear-gradient(135deg, #fffaf2, #fffaf2 10px, #fff4e4 10px, #fff4e4 20px);
+  color: #8b6c49;
+  text-align: center;
+  font-size: 13px;
 }
-.post-body .pros-cons > * {
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 18px;
-  background: #fff;
-}
+.ad-box.small { min-height: 74px; }
 
-/* ==========================================================================
-   08. Affiliate CTA link button for Blogger normal-size linked text
-   ========================================================================== */
-.post-body a:not(.plain-link) { font-weight: 800; }
-.post-body a[style*="font-size: medium"],
-.post-body a[style*="font-size:medium"],
-.post-body span[style*="font-size: medium"] a,
-.post-body span[style*="font-size:medium"] a,
-.post-body .cta-button {
+/* 05. Post list ---------------------------------------------------------- */
+.post-card {
+  display: grid;
+  grid-template-columns: 238px minmax(0, 1fr);
+  gap: 22px;
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.post-card:hover { border-color: #d8bd91; transform: translateY(-1px); transition: transform .18s ease, border-color .18s ease; }
+.thumb {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  background: #f3dfbf;
+  color: inherit;
+  text-decoration: none;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+.auto-thumb {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  text-align: center;
+  color: #59350f;
+  font-weight: 950;
+  line-height: 1.25;
+  letter-spacing: -.045em;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.85), transparent 33%),
+    linear-gradient(135deg, #f7dfb8, #fff8e9 56%, #e0efe9);
+}
+.auto-thumb span { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.post-card h2 { margin: 0 0 8px; font-size: 24px; line-height: 1.3; letter-spacing: -.045em; }
+.post-card h2 a { color: var(--ink); text-decoration: none; }
+.post-card h2 a:hover { color: var(--brand); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 11px; align-items: center; margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+.snippet { color: #554d45; font-size: 15px; }
+.pager { display: flex; justify-content: space-between; gap: 10px; margin: 24px 0; }
+.pager a { padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--brand); text-decoration: none; font-weight: 850; }
+.status-msg-wrap { margin-bottom: 20px; padding: 14px 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper-warm); }
+
+/* 06. Single article ----------------------------------------------------- */
+.article {
+  padding: clamp(22px, 4vw, 46px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.article-head { margin-bottom: 22px; }
+.article-title { margin: 0 0 14px; font-size: clamp(32px, 5vw, 52px); line-height: 1.12; letter-spacing: -.065em; }
+.hero-image { width: 100%; margin: 0 0 22px; border-radius: 24px; box-shadow: var(--shadow-soft); }
+.article-body { font-size: 18px; line-height: 1.88; word-break: keep-all; }
+.article-body > :first-child { margin-top: 0; }
+.article-body p { margin: 0 0 18px; }
+.article-body h2, .article-body h3, .article-body h4 { color: #211d19; line-height: 1.28; letter-spacing: -.05em; scroll-margin-top: 96px; }
+.article-body h2 { margin: 44px 0 16px; padding-bottom: 10px; border-bottom: 3px solid #ead8bd; font-size: 30px; }
+.article-body h2:before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 10px; border-radius: 50%; background: var(--brand); vertical-align: middle; }
+.article-body h3 { margin: 34px 0 12px; padding-left: 14px; border-left: 5px solid var(--green); font-size: 24px; }
+.article-body h4 { margin: 26px 0 10px; font-size: 20px; color: #483b30; }
+.article-body ul, .article-body ol { margin: 0 0 22px; padding-left: 1.35em; }
+.article-body li { margin: 8px 0; }
+.article-body blockquote { margin: 28px 0; padding: 19px 22px; border-left: 5px solid var(--brand); border-radius: 0 var(--radius-md) var(--radius-md) 0; background: var(--paper-warm); color: #493f36; }
+.article-body mark { padding: .1em .25em; border-radius: .35em; background: var(--yellow); }
+.article-body code { padding: 2px 5px; border: 1px solid #eadac4; border-radius: 6px; background: #f7eddd; font-size: .92em; }
+.article-body pre { overflow: auto; padding: 18px; border-radius: var(--radius-md); background: #2b241e; color: #fff7ed; font-size: 14px; }
+.article-body pre code { padding: 0; border: 0; background: transparent; color: inherit; }
+
+/* 07. Content modules ---------------------------------------------------- */
+.article-body table { width: 100%; margin: 24px 0; border: 1px solid var(--line); border-collapse: separate; border-spacing: 0; border-radius: var(--radius-md); overflow: hidden; background: #fff; font-size: 15px; }
+.article-body th, .article-body td { padding: 13px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.article-body th { background: #fbedd6; color: #38271a; text-align: left; font-weight: 900; }
+.article-body tr:nth-child(even) td { background: #fffaf2; }
+.article-body tr:last-child td { border-bottom: 0; }
+.article-body .note, .article-body .tip, .article-body .warning, .article-body .summary, .article-body .affiliate-disclosure { margin: 24px 0; padding: 18px 20px; border-radius: var(--radius-lg); border: 1px solid var(--line); }
+.article-body .note { background: var(--paper-warm); }
+.article-body .tip { background: var(--green-soft); border-color: #cfe5de; }
+.article-body .warning { background: var(--red-soft); border-color: #eed3ce; }
+.article-body .summary { background: #fff; box-shadow: var(--shadow-soft); }
+.article-body .affiliate-disclosure { background: #fffaf2; color: #5f5143; font-size: 15px; }
+.article-body .pros-cons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 24px 0; }
+.article-body .pros-cons > * { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; }
+.article-body .faq-box { margin: 28px 0; border-top: 2px solid var(--line-2); }
+.article-body .faq-box > * { padding: 15px 0; border-bottom: 1px solid var(--line); }
+.article-body .rank-card { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 14px; margin: 18px 0; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; }
+.article-body .rank-card:before { content: attr(data-rank); display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--paper-warm); color: var(--brand); font-weight: 950; }
+.article-body a:not(.plain-link) { font-weight: 850; }
+.article-body a[style*="font-size: medium"],
+.article-body a[style*="font-size:medium"],
+.article-body span[style*="font-size: medium"] a,
+.article-body span[style*="font-size:medium"] a,
+.article-body .buy-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -594,319 +355,130 @@ button { cursor: pointer; }
   min-height: 46px;
   margin: 8px 0;
   padding: 12px 20px;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   color: #fff !important;
   text-decoration: none !important;
-  box-shadow: 0 12px 24px rgba(155, 92, 34, .24);
-  font-weight: 900;
+  font-weight: 950;
+  box-shadow: 0 12px 24px rgba(138, 79, 32, .22);
 }
-.post-body a[style*="font-size: medium"]:after,
-.post-body a[style*="font-size:medium"]:after,
-.post-body span[style*="font-size: medium"] a:after,
-.post-body span[style*="font-size:medium"] a:after,
-.post-body .cta-button:after {
-  content: "›";
-  font-size: 22px;
-  line-height: 1;
-}
-.post-body .cta-button.secondary {
-  background: #fff;
-  color: var(--brand) !important;
-  border: 1px solid #e4c498;
-  box-shadow: none;
-}
+.article-body a[style*="font-size: medium"]:after,
+.article-body a[style*="font-size:medium"]:after,
+.article-body span[style*="font-size: medium"] a:after,
+.article-body span[style*="font-size:medium"] a:after,
+.article-body .buy-button:after { content: "›"; font-size: 22px; line-height: 1; }
 
-/* ==========================================================================
-   09. TOC, share, related posts and ads
-   ========================================================================== */
-.toc-box {
-  display: none;
-  margin: 22px 0 30px;
-  padding: 18px;
-  background: #fff8ed;
-  border: 1px solid #ead6ba;
-  border-radius: 18px;
-}
-.toc-box.is-ready { display: block; }
-.toc-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 0 10px;
-  font-weight: 900;
-}
-.toc-box ol { margin: 0; padding-left: 20px; }
-.toc-box li { margin: 6px 0; }
-.toc-box a { color: #4b3825; text-decoration: none; }
-.toc-box a:hover { color: var(--brand); text-decoration: underline; }
-.share-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 28px 0;
-}
-.native-share,
-.copy-link {
-  border-radius: var(--radius-pill);
-  padding: 12px 18px;
-  font-weight: 900;
-}
-.native-share {
-  border: 0;
-  background: var(--accent);
-  color: #fff;
-}
-.copy-link {
-  border: 1px solid var(--line);
-  background: #fff;
-  color: var(--text);
-}
-.related-posts { margin-top: 32px; }
-.related-posts h2 {
-  margin: 0 0 14px;
-  font-size: 23px;
-  letter-spacing: -.04em;
-}
-.related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-.related-item {
-  display: block;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 13px;
-  text-decoration: none;
-  color: var(--text);
-}
-.related-item:hover {
-  border-color: #d3ad78;
-  transform: translateY(-1px);
-}
-.related-item strong {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.35;
-}
-.ad-slot {
-  display: grid;
-  place-items: center;
-  min-height: 112px;
-  background: repeating-linear-gradient(135deg, #fffaf1, #fffaf1 10px, #fff4e4 10px, #fff4e4 20px);
-  border: 1px dashed #d8bd91;
-  border-radius: 16px;
-  color: #92724d;
-  font-size: 13px;
-  text-align: center;
-  padding: 16px;
-  margin: 20px 0;
-}
-.ad-slot.compact { min-height: 72px; }
-.ad-slot.sticky-helper { margin-top: 0; }
+/* 08. Toc share related -------------------------------------------------- */
+.toc { display: none; margin: 22px 0 30px; padding: 18px; border: 1px solid #ead6ba; border-radius: var(--radius-lg); background: var(--paper-warm); }
+.toc.ready { display: block; }
+.toc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-weight: 950; }
+.toc ol { margin: 0; padding-left: 20px; }
+.toc li { margin: 6px 0; }
+.toc a { color: #4b3825; text-decoration: none; }
+.toc a:hover { color: var(--brand); text-decoration: underline; }
+.share { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0; }
+.share button { padding: 12px 18px; border-radius: 999px; font-weight: 900; }
+.share-native { border: 0; background: var(--green); color: #fff; }
+.share-copy { border: 1px solid var(--line); background: #fff; color: var(--ink); }
+.related { margin-top: 32px; }
+.related h2 { margin: 0 0 14px; font-size: 23px; line-height: 1.25; letter-spacing: -.04em; }
+.related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.related-card { display: block; min-height: 86px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: #fff; color: var(--ink); text-decoration: none; }
+.related-card:hover { border-color: #d3ad78; transform: translateY(-1px); }
+.related-card strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
+.comment-area { margin-top: 24px; }
 
-/* ==========================================================================
-   10. Widgets and sidebar
-   ========================================================================== */
-.widget {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 20px;
-  margin: 0 0 20px;
-}
-.widget-title,
-.sidebar .title,
-.footer .title {
-  margin: 0 0 13px;
-  font-size: 16px;
-  letter-spacing: -.02em;
-}
-.PopularPosts ul,
-.Label ul,
-.BlogArchive ul,
-.LinkList ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.PopularPosts li,
-.Label li,
-.BlogArchive li,
-.sidebar .LinkList li {
-  border-top: 1px solid var(--line);
-  padding: 10px 0;
-}
-.PopularPosts li:first-child,
-.Label li:first-child,
-.BlogArchive li:first-child,
-.sidebar .LinkList li:first-child { border-top: 0; }
-.Label a {
-  display: inline-flex;
-  margin: 4px 6px 4px 0;
-  padding: 6px 10px;
-  border-radius: var(--radius-pill);
-  background: #f7eddd;
-  text-decoration: none;
-  color: #58412a;
-  font-weight: 700;
-  font-size: 13px;
-}
-.profile-img { border-radius: 50%; }
-.status-msg-wrap {
-  background: #fff8ed;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 14px 18px;
-  margin-bottom: 20px;
-}
-.pager {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 24px 0;
-}
-.pager a {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  padding: 10px 14px;
-  text-decoration: none;
-  font-weight: 800;
-}
-.comment-section { margin-top: 24px; }
-
-/* ==========================================================================
-   11. Footer
-   ========================================================================== */
-.footer {
-  border-top: 1px solid var(--line);
-  background: #fffaf2;
-  padding: 34px 0;
-  color: #5d554d;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 24px;
-}
+/* 09. Footer ------------------------------------------------------------- */
+.footer { border-top: 1px solid var(--line); background: #fffaf2; padding: 34px 0; color: #5d554d; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; }
 .footer a { color: #544334; }
-.site-credit {
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 13px;
-}
+.footer-note { margin-top: 18px; color: var(--muted); font-size: 13px; }
 
-/* ==========================================================================
-   12. Responsive and print
-   ========================================================================== */
-@media (max-width: 1080px) {
+/* 10. Practical helper classes ------------------------------------------ */
+.box { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; }
+.box.warm { background: var(--paper-warm); }
+.box.green { background: var(--green-soft); border-color: #cfe5de; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.muted { color: var(--muted); }
+.center { text-align: center; }
+.tight { line-height: 1.45; }
+.lead { font-size: 20px; line-height: 1.7; color: var(--ink-2); }
+.small { font-size: 14px; }
+
+/* 11. Responsive --------------------------------------------------------- */
+@media (max-width: 1040px) {
   :root { --sidebar: 300px; --gap: 24px; }
-  .post-card { grid-template-columns: 220px minmax(0, 1fr); }
+  .post-card { grid-template-columns: 210px minmax(0, 1fr); }
 }
-@media (max-width: 980px) {
+@media (max-width: 940px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { position: static; }
-  .post-card { grid-template-columns: 200px minmax(0, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .search-mini input { width: 150px; }
-  .trust-strip { grid-template-columns: 1fr; }
+  .promise-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   body { font-size: 16px; }
-  .site-shell { padding: 0 14px; }
-  .header-inner { min-height: 64px; }
-  .nav-toggle { display: block; }
-  .nav-area {
-    display: none;
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    top: 70px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: var(--shadow);
-    padding: 14px;
-  }
-  .nav-area.is-open { display: block; }
-  .LinkList ul,
-  .PageList ul { display: block; }
-  .search-mini { margin-top: 10px; }
-  .search-mini input { width: 100%; }
-  .hero-card { padding: 24px; }
-  .post-card { grid-template-columns: 1fr; }
-  .post { padding: 20px; border-radius: 20px; }
-  .post-body { font-size: 17px; }
-  .post-body h2 { font-size: 25px; }
-  .post-body h3 { font-size: 21px; }
-  .post-body table { display: block; overflow-x: auto; white-space: nowrap; }
-  .post-body .pros-cons { grid-template-columns: 1fr; }
-  .related-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 430px) {
-  .brand-mark { width: 38px; height: 38px; }
-  .Header h1,
-  .Header .title { font-size: 20px; }
-  .post-card { padding: 14px; border-radius: 20px; }
-  .share-row > * { width: 100%; }
+  .wrap { padding: 0 14px; }
+  .header-grid { min-height: 66px; }
+  .menu-button { display: block; }
+  .nav-panel { display: none; position: absolute; top: 70px; left: 14px; right: 14px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; box-shadow: var(--shadow); }
+  .nav-panel.open { display: block; }
+  .nav-panel .PageList ul, .nav-panel .LinkList ul { display: block; }
+  .search-form { margin-top: 10px; }
+  .search-form input { width: 100%; }
+  .hero { padding: 24px; }
+  .post-card { grid-template-columns: 1fr; padding: 14px; border-radius: var(--radius-lg); }
+  .article { padding: 20px; border-radius: var(--radius-lg); }
+  .article-body { font-size: 17px; }
+  .article-body h2 { font-size: 25px; }
+  .article-body h3 { font-size: 21px; }
+  .article-body table { display: block; overflow-x: auto; white-space: nowrap; }
+  .article-body .pros-cons, .grid-2, .grid-3, .related-grid, .footer-grid { grid-template-columns: 1fr; }
+  .share button { width: 100%; }
 }
 @media print {
-  .site-header,
-  .sidebar,
-  .share-row,
-  .footer,
-  .top-note,
-  .ad-slot,
-  .toc-box { display: none !important; }
+  .notice-bar, .site-header, .sidebar, .ad-box, .share, .related, .footer, .toc { display: none !important; }
   .layout { display: block; }
-  .post { box-shadow: none; border: 0; }
+  .article { border: 0; box-shadow: none; padding: 0; }
 }
   ]]></b:skin>
   <script type='application/ld+json'>{&quot;@context&quot;:&quot;https://schema.org&quot;,&quot;@type&quot;:&quot;WebSite&quot;,&quot;name&quot;:&quot;<data:blog.title/>&quot;,&quot;url&quot;:&quot;<data:blog.homepageUrl/>&quot;,&quot;potentialAction&quot;:{&quot;@type&quot;:&quot;SearchAction&quot;,&quot;target&quot;:&quot;<data:blog.homepageUrl/>search?q={search_term_string}&quot;,&quot;query-input&quot;:&quot;required name=search_term_string&quot;}}</script>
 </head>
 <body>
   <a class='skip-link' href='#main'>본문 바로가기</a>
-  <div class='top-note'>
-    <div class='site-shell'>검증된 정보, 쉬운 비교, 실용적인 선택을 돕는 블로그입니다.</div>
-  </div>
+  <div class='notice-bar'><div class='wrap'>구매 전 확인할 기준과 실제 사용에 가까운 정보를 차분히 정리합니다.</div></div>
   <header class='site-header'>
-    <div class='site-shell header-inner'>
-      <div class='brand-wrap'>
-        <div class='brand-mark'>B</div>
+    <div class='wrap header-grid'>
+      <div class='brand'>
+        <div class='brand-symbol'>B</div>
         <b:section class='brand-section' id='brand-section' maxwidgets='1' showaddelement='no'>
           <b:widget id='Header1' locked='true' title='블로그 이름' type='Header' version='2' visible='true'/>
         </b:section>
       </div>
-      <button aria-controls='navArea' aria-expanded='false' class='nav-toggle' type='button'>메뉴</button>
-      <div class='nav-area' id='navArea'>
-        <b:section class='menu-section' id='menu-section' maxwidgets='2' showaddelement='yes'>
+      <button aria-controls='navPanel' aria-expanded='false' class='menu-button' type='button'>메뉴</button>
+      <div class='nav-panel' id='navPanel'>
+        <b:section class='nav-section' id='nav-section' maxwidgets='2' showaddelement='yes'>
           <b:widget id='PageList1' locked='false' title='메뉴' type='PageList' version='2' visible='true'/>
         </b:section>
-        <form action='/search' class='search-mini' method='get'>
+        <form action='/search' class='search-form' method='get'>
           <input aria-label='검색어' name='q' placeholder='검색' type='search'/>
           <button aria-label='검색' type='submit'>⌕</button>
         </form>
       </div>
     </div>
   </header>
-  <div class='site-shell layout'>
-    <main class='main-col' id='main'>
+  <div class='wrap layout'>
+    <main class='content' id='main'>
       <b:if cond='data:view.isHomepage'>
-        <section class='hero-card'>
-          <h2>필요한 정보를 빠르게 비교하고 현명하게 선택하세요</h2>
-          <p>구매 전 확인할 핵심 기준, 장단점, 활용 팁을 읽기 편한 구조로 정리합니다.</p>
+        <section class='hero'>
+          <h2>비교는 쉽게, 선택은 신중하게</h2>
+          <p>필요한 기준만 남기고 과장된 표현은 덜어낸 블로그입니다. 제품·서비스·생활 정보를 구매 전 체크리스트 중심으로 정리합니다.</p>
         </section>
-        <section class='trust-strip' aria-label='콘텐츠 운영 원칙'>
-          <div class='trust-item'>사실 확인 중심</div>
-          <div class='trust-item'>선택 기준 우선</div>
-          <div class='trust-item'>광고·제휴 고지 가능</div>
+        <section aria-label='운영 원칙' class='promise-row'>
+          <div class='promise'>공식 정보와 실제 확인 기준 중심</div>
+          <div class='promise'>광고와 제휴는 자연스럽고 명확하게</div>
+          <div class='promise'>목차·표·FAQ로 빠르게 판단</div>
         </section>
       </b:if>
       <b:section class='main-section' id='main-section' maxwidgets='1' showaddelement='no'>
@@ -924,82 +496,82 @@ button { cursor: pointer; }
             <b:include name='status-message'/>
             <b:loop values='data:posts' var='post'>
               <article class='post-card'>
-                <a class='post-thumb' expr:href='data:post.url'>
+                <a class='thumb' expr:href='data:post.url'>
                   <b:if cond='data:post.featuredImage'>
                     <img expr:alt='data:post.title' expr:src='resizeImage(data:post.featuredImage, 640, &quot;16:10&quot;)' loading='lazy'/>
                   <b:else/>
-                    <div class='fallback-thumb'><span><data:post.title/></span></div>
+                    <div class='auto-thumb'><span><data:post.title/></span></div>
                   </b:if>
                 </a>
-                <div class='post-card-body'>
+                <div>
                   <h2><a expr:href='data:post.url'><data:post.title/></a></h2>
-                  <div class='post-meta'>
+                  <div class='meta'>
                     <time expr:datetime='data:post.date.iso8601'><data:post.date/></time>
                     <b:if cond='data:post.labels'>
                       <b:loop values='data:post.labels' var='label'>
-                        <a class='label-pill' expr:href='data:label.url'><data:label.name/></a>
+                        <a class='label-chip' expr:href='data:label.url'><data:label.name/></a>
                       </b:loop>
                     </b:if>
                   </div>
-                  <div class='post-snippet'><data:post.snippet/></div>
+                  <div class='snippet'><data:post.snippet/></div>
                 </div>
               </article>
             </b:loop>
-            <nav class='pager' aria-label='글 목록 이동'>
+            <nav aria-label='글 목록 이동' class='pager'>
               <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'>새 글</a></b:if>
               <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'>이전 글</a></b:if>
             </nav>
           </b:includable>
           <b:includable id='postFull' var='post'>
-            <article class='post hentry'>
-              <header class='post-header'>
-                <h1 class='post-title entry-title'><data:post.title/></h1>
-                <div class='post-meta'>
+            <article class='article hentry'>
+              <header class='article-head'>
+                <h1 class='article-title entry-title'><data:post.title/></h1>
+                <div class='meta'>
                   <time expr:datetime='data:post.date.iso8601'><data:post.date/></time>
                   <span><data:post.author.name/></span>
                   <b:if cond='data:post.labels'>
                     <b:loop values='data:post.labels' var='label'>
-                      <a class='label-pill' expr:href='data:label.url'><data:label.name/></a>
+                      <a class='label-chip' expr:href='data:label.url'><data:label.name/></a>
                     </b:loop>
                   </b:if>
                 </div>
               </header>
               <b:if cond='data:post.featuredImage'>
-                <img class='entry-hero' expr:alt='data:post.title' expr:src='resizeImage(data:post.featuredImage, 1280, &quot;16:9&quot;)'/>
+                <img class='hero-image' expr:alt='data:post.title' expr:src='resizeImage(data:post.featuredImage, 1280, &quot;16:9&quot;)'/>
               <b:else/>
-                <div class='post-thumb entry-hero'><div class='fallback-thumb'><span><data:post.title/></span></div></div>
+                <div class='thumb hero-image'><div class='auto-thumb'><span><data:post.title/></span></div></div>
               </b:if>
-              <div class='ad-slot compact'>상단 광고 영역 - 레이아웃에서 HTML/JavaScript 위젯으로 교체하세요.</div>
-              <nav aria-label='목차' class='toc-box' id='tocBox'>
-                <div class='toc-title'>목차 <span>본문 핵심</span></div>
+              <div class='ad-box small'>상단 광고 영역</div>
+              <nav aria-label='목차' class='toc' id='tocBox'>
+                <div class='toc-head'>목차 <span>바로가기</span></div>
                 <ol id='tocList'></ol>
               </nav>
-              <div class='post-body entry-content' id='postBody'><data:post.body/></div>
-              <div class='ad-slot'>본문 하단 광고 또는 제휴 CTA 영역</div>
-              <div class='share-row'>
-                <button class='native-share' type='button'>공유하기</button>
-                <button class='copy-link' type='button'>링크 복사</button>
+              <div class='article-body entry-content' id='articleBody'><data:post.body/></div>
+              <div class='ad-box'>본문 하단 광고 또는 추천 링크 영역</div>
+              <div class='share'>
+                <button class='share-native' type='button'>공유하기</button>
+                <button class='share-copy' type='button'>링크 복사</button>
               </div>
-              <section class='related-posts'>
+              <section class='related'>
                 <h2>함께 보면 좋은 글</h2>
                 <div class='related-grid' id='relatedGrid'></div>
               </section>
             </article>
             <b:if cond='data:post.allowComments'>
-              <section class='comment-section'><b:include data='post' name='comments'/></section>
+              <section class='comment-area'><b:include data='post' name='comments'/></section>
             </b:if>
           </b:includable>
         </b:widget>
       </b:section>
     </main>
     <aside class='sidebar'>
-      <b:section class='sidebar-section' id='sidebar-top' showaddelement='yes'>
-        <b:widget id='HTML1' locked='false' title='공지/광고' type='HTML' version='2' visible='true'>
+      <b:section class='sidebar-section' id='sidebar-section' showaddelement='yes'>
+        <b:widget id='HTML1' locked='false' title='광고/공지' type='HTML' version='2' visible='true'>
           <b:widget-settings>
-            <b:widget-setting name='content'><![CDATA[<div class="ad-slot sticky-helper">사이드바 광고 또는 핵심 CTA</div>]]></b:widget-setting>
+            <b:widget-setting name='content'><![CDATA[<div class="ad-box">사이드바 광고 또는 핵심 안내</div>]]></b:widget-setting>
           </b:widget-settings>
         </b:widget>
-        <b:widget id='PopularPosts1' locked='false' title='인기 글' type='PopularPosts' version='2' visible='true'/>
+        <b:widget id='PopularPosts1' locked='false' title='많이 본 글' type='PopularPosts' version='2' visible='true'/>
         <b:widget id='Label1' locked='false' title='카테고리' type='Label' version='2' visible='true'/>
         <b:widget id='BlogArchive1' locked='false' title='글 보관함' type='BlogArchive' version='2' visible='true'/>
         <b:widget id='Profile1' locked='false' title='운영자' type='Profile' version='2' visible='true'/>
@@ -1008,67 +580,68 @@ button { cursor: pointer; }
     </aside>
   </div>
   <footer class='footer'>
-    <div class='site-shell footer-grid'>
-      <b:section id='footer-1' showaddelement='yes'>
+    <div class='wrap footer-grid'>
+      <b:section id='footer-about' showaddelement='yes'>
         <b:widget id='Text1' locked='false' title='블로그 소개' type='Text' version='2' visible='true'/>
       </b:section>
-      <b:section id='footer-2' showaddelement='yes'>
+      <b:section id='footer-links' showaddelement='yes'>
         <b:widget id='LinkList2' locked='false' title='필수 링크' type='LinkList' version='2' visible='true'/>
       </b:section>
-      <b:section id='footer-3' showaddelement='yes'>
-        <b:widget id='HTML2' locked='false' title='광고/제휴 안내' type='HTML' version='2' visible='true'/>
+      <b:section id='footer-notice' showaddelement='yes'>
+        <b:widget id='HTML2' locked='false' title='제휴/광고 안내' type='HTML' version='2' visible='true'/>
       </b:section>
     </div>
-    <div class='site-shell site-credit'>© <data:blog.title/>. 모든 권리 보유.</div>
+    <div class='wrap footer-note'>© <data:blog.title/>. 무단 복제 및 재배포를 금합니다.</div>
   </footer>
   <script><![CDATA[
 (function () {
   'use strict';
 
-  var nav = document.getElementById('navArea');
-  var btn = document.querySelector('.nav-toggle');
-  if (btn && nav) {
-    btn.addEventListener('click', function () {
-      var open = nav.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  var nav = document.getElementById('navPanel');
+  var menu = document.querySelector('.menu-button');
+  if (nav && menu) {
+    menu.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      menu.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 
-  var body = document.getElementById('postBody');
+  var body = document.getElementById('articleBody');
   var toc = document.getElementById('tocBox');
   var list = document.getElementById('tocList');
   if (body && toc && list) {
     var heads = [].slice.call(body.querySelectorAll('h2,h3'));
     if (heads.length > 1) {
-      heads.forEach(function (h, i) {
-        if (!h.id) {
-          h.id = 'section-' + (i + 1);
+      heads.forEach(function (head, index) {
+        if (!head.id) {
+          head.id = 'section-' + (index + 1);
         }
-        var li = document.createElement('li');
-        if (h.tagName === 'H3') {
-          li.style.marginLeft = '14px';
+        var item = document.createElement('li');
+        if (head.tagName === 'H3') {
+          item.style.marginLeft = '14px';
         }
-        var a = document.createElement('a');
-        a.href = '#' + h.id;
-        a.textContent = h.textContent.trim();
-        li.appendChild(a);
-        list.appendChild(li);
+        var link = document.createElement('a');
+        link.href = '#' + head.id;
+        link.textContent = head.textContent.trim();
+        item.appendChild(link);
+        list.appendChild(item);
       });
-      toc.classList.add('is-ready');
+      toc.classList.add('ready');
     }
   }
 
-  var share = document.querySelector('.native-share');
-  var copy = document.querySelector('.copy-link');
+  var share = document.querySelector('.share-native');
+  var copy = document.querySelector('.share-copy');
   function copyUrl() {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(location.href).then(function () {
-        if (copy) {
-          copy.textContent = '복사 완료';
-          window.setTimeout(function () { copy.textContent = '링크 복사'; }, 1800);
-        }
-      });
+    if (!navigator.clipboard) {
+      return;
     }
+    navigator.clipboard.writeText(location.href).then(function () {
+      if (copy) {
+        copy.textContent = '복사 완료';
+        window.setTimeout(function () { copy.textContent = '링크 복사'; }, 1700);
+      }
+    });
   }
   if (share) {
     share.addEventListener('click', function () {
@@ -1085,33 +658,33 @@ button { cursor: pointer; }
 
   var related = document.getElementById('relatedGrid');
   if (related) {
-    var labels = [].slice.call(document.querySelectorAll('.post-meta .label-pill'))
-      .map(function (a) { return a.textContent.trim(); })
+    var labels = [].slice.call(document.querySelectorAll('.article .label-chip'))
+      .map(function (label) { return label.textContent.trim(); })
       .filter(Boolean);
     var feed = '/feeds/posts/summary?alt=json&max-results=6';
     if (labels[0]) {
       feed = '/feeds/posts/summary/-/' + encodeURIComponent(labels[0]) + '?alt=json&max-results=6';
     }
     fetch(feed)
-      .then(function (r) { return r.json(); })
+      .then(function (res) { return res.json(); })
       .then(function (json) {
         var entries = (json.feed && json.feed.entry) || [];
         var current = location.href.replace(/[#?].*/, '');
         entries
-          .filter(function (e) {
-            var link = (e.link || []).filter(function (l) { return l.rel === 'alternate'; })[0];
+          .filter(function (entry) {
+            var link = (entry.link || []).filter(function (item) { return item.rel === 'alternate'; })[0];
             return link && link.href.replace(/[#?].*/, '') !== current;
           })
           .slice(0, 3)
-          .forEach(function (e) {
-            var link = (e.link || []).filter(function (l) { return l.rel === 'alternate'; })[0];
-            var a = document.createElement('a');
-            var title = e.title && e.title.$t ? e.title.$t : '관련 글';
-            a.className = 'related-item';
-            a.href = link.href;
-            a.innerHTML = '<strong></strong>';
-            a.querySelector('strong').textContent = title;
-            related.appendChild(a);
+          .forEach(function (entry) {
+            var link = (entry.link || []).filter(function (item) { return item.rel === 'alternate'; })[0];
+            var title = entry.title && entry.title.$t ? entry.title.$t : '관련 글';
+            var anchor = document.createElement('a');
+            anchor.className = 'related-card';
+            anchor.href = link.href;
+            anchor.innerHTML = '<strong></strong>';
+            anchor.querySelector('strong').textContent = title;
+            related.appendChild(anchor);
           });
         if (!related.children.length && related.parentNode) {
           related.parentNode.style.display = 'none';
